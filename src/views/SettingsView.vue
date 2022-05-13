@@ -31,7 +31,6 @@ const settings = useSettingsStore();
       >
     </label>
     <select class="select select-bordered" v-model="settings.azureregion">
-      <option disabled selected>Pick one or type your region</option>
       <option>westeurope</option>
       <option>northeurope</option>
       <option>westus</option>
