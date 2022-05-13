@@ -10,7 +10,7 @@ on:
       - main
 
 env:
-  BASE_PATH: cognitive-services-kitchen-sink
+  BASE_PATH: sink
 
 jobs:
   build:
@@ -43,7 +43,7 @@ jobs:
     needs: build
     environment:
       name: pages
-      url: https://${{ github.repository_owner }}.github.io/cognitive-services-kitchen-sink
+      url: https://${{ github.repository_owner }}.github.io/sink
 
     if: ${{ github.ref == 'refs/heads/main' }}
 
