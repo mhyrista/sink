@@ -20,7 +20,7 @@ function startRecording() {
 
 const state = reactive({ text: "" });
 var recognizer: SpeechRecognizer;
-var selectedLanguage = "de-DE";
+var selectedLanguage = "";
 
 function onStream(stream: MediaStream) {
   const speechConfig = SpeechConfig.fromSubscription(
@@ -51,7 +51,7 @@ function onChange(e: any) {
 </script>
 
 <template>
-  <!-- <div class="form-control w-full max-w-xs">
+  <div class="form-control w-full max-w-xs">
     <label class="label">
       <span class="label-text"><strong>Pick the language you want to transcribe</strong></span>
     </label>
@@ -62,7 +62,7 @@ function onChange(e: any) {
       <option>fr-FR</option>
       <option>hi-IN</option>
     </select>
-  </div> -->
+  </div>
   <button class="btn gap-2" @click="startRecording">
     <font-awesome-icon icon="microphone" />
     Start Recording
