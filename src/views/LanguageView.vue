@@ -70,38 +70,35 @@ function onGo(){
 </script>
 
 <template>
-
-  <div class="btn-group">
-    <input type="radio" name="options" data-title="de-DE" class="btn" checked />
-    <input type="radio" name="options" data-title="en-US" class="btn" />
-    <input type="radio" name="options" data-title="es-ES" class="btn" />
-    <input type="radio" name="options" data-title="fr-FR" class="btn" />
-    <input type="radio" name="options" data-title="hi-IN" class="btn" />
-  </div>
-
-  <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
-  <div class="form-control">
-    <div class="input-group">
-      <label class="input-group">
-        <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
-        <button class="btn" @click="onGo">translate</button>
-      </label>
+  <div>
+    <div class="btn-group">
+      <input type="radio" name="options" data-title="de-DE" class="btn" checked />
+      <input type="radio" name="options" data-title="en-US" class="btn" />
+      <input type="radio" name="options" data-title="es-ES" class="btn" />
+      <input type="radio" name="options" data-title="fr-FR" class="btn" />
+      <input type="radio" name="options" data-title="hi-IN" class="btn" />
     </div>
-  </div>
-  <div class="btn-group">
-    <input type="radio" name="options" data-title="german" class="btn" />
-    <input type="radio" name="options" data-title="english" class="btn" checked />
-    <input type="radio" name="options" data-title="spanish" class="btn" />
-    <input type="radio" name="options" data-title="french" class="btn" />
-    <input type="radio" name="options" data-title="hindi" class="btn" />
+
+    <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
+    <button class="btn" @click="onGo">translate</button>
   </div>
 
-  <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
-    <div class="collapse-title text-xl font-medium">
-      translation result
+  <div>
+    <div class="btn-group">
+      <input type="radio" name="options" data-title="german" class="btn" />
+      <input type="radio" name="options" data-title="english" class="btn" checked />
+      <input type="radio" name="options" data-title="spanish" class="btn" />
+      <input type="radio" name="options" data-title="french" class="btn" />
+      <input type="radio" name="options" data-title="hindi" class="btn" />
     </div>
-    <div class="collapse-content"> 
-      <p>tabindex="0" more info</p>
+
+    <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+      <div class="collapse-title text-xl font-medium">
+        translation result
+      </div>
+      <div class="collapse-content"> 
+        <p>tabindex="0" more info</p>
+      </div>
     </div>
   </div>
 
