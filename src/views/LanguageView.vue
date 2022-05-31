@@ -82,15 +82,9 @@ function onGo(){
         <option>hi-IN</option>
       </select>
       <label class="input-group">
-        <input type="text" placeholder="0.01" class="input input-bordered" v-model="sentence"/>
-        <span>language</span>
+        <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
+        <button class="btn" @click="onGo">translate</button>
       </label>
-    </div>
-  </div>
-  <div class="form-control">
-    <div class="input-group">
-      <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" />
-      <button class="btn" @click="onGo">Go</button>
     </div>
   </div>
 
@@ -105,13 +99,9 @@ function onGo(){
         <option>hi-IN</option>
       </select>
       <label class="input-group">
-        <input type="text" placeholder="0.01" class="input input-bordered" />
-        <span>language</span>
+        language
       </label>
     </div>
-  </div>
-  <div class="form-control">
-      <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" />
   </div>
   To do: Input Text - Translate text into several languages (select language
   from a dropdown) - sentiment analyse
