@@ -98,9 +98,6 @@ function onGo(){
         <option>fr-FR</option>
         <option>hi-IN</option>
       </select>
-      <label class="input-group">
-        language
-      </label>
     </div>
   </div>
   To do: Input Text - Translate text into several languages (select language
