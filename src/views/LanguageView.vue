@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import { useSettingsStore } from "@/stores/settings";
+//import { useSettingsStore } from "@/stores/settings";
 
 // import {
 //   TranslatorTextClient,
@@ -13,8 +13,8 @@ import { useSettingsStore } from "@/stores/settings";
 
 const uuidv4 = require('uuid/v4');
 const request = require('request');
-const settings = useSettingsStore();
-const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
+// const settings = useSettingsStore();
+// const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 // const documents = [];
 var translation = "";
 // const sentiment = "";
