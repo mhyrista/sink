@@ -130,5 +130,5 @@ function onGo(){
       </select>
     </div>
   </div>
-  To do: {{ translation }}
+  To do: translation
 </template>
