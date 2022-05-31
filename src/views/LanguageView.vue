@@ -58,7 +58,7 @@ function onGo(){
 // };
 
 // Call the function to translate text.
-translateText();
+// translateText();
 
 // function startRecording() {
 //   console.log("Recording started...");
