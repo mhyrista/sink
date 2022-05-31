@@ -11,8 +11,8 @@ import { reactive } from "vue";
 //   AzureKeyCredential,
 // } from "@azure/ai-text-analytics";
 
-const uuidv4 = require('uuid/v4');
-const request = require('request');
+// const uuidv4 = require('uuid/v4');
+// const request = require('request');
 // const settings = useSettingsStore();
 // const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 // const documents = [];
