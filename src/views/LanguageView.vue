@@ -1,31 +1,32 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import { useSettingsStore } from "@/stores/settings";
+// import { useSettingsStore } from "@/stores/settings";
 
-import {
-  TranslatorTextClient,
-} from "@azure/cognitiveservices-translatortext";
+// import {
+//   TranslatorTextClient,
+// } from "@azure/cognitiveservices-translatortext";
 
-import {
-  TextAnalyticsClient,
-  AzureKeyCredential,
-} from "@azure/ai-text-analytics";
+// import {
+//   TextAnalyticsClient,
+//   AzureKeyCredential,
+// } from "@azure/ai-text-analytics";
 
-const settings = useSettingsStore();
-const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
-const taclient = new TextAnalyticsClient(endpoint,
-    new AzureKeyCredential(settings.apikey));
-const ttclient = new TranslatorTextClient(new AzureKeyCredential(settings.apikey), 
-    endpoint);
-const documents = [];
-const translation = "";
-const sentiment = "";
+// const settings = useSettingsStore();
+// const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
+// const taclient = new TextAnalyticsClient(endpoint,
+//     new AzureKeyCredential(settings.apikey));
+// const ttclient = new TranslatorTextClient(new AzureKeyCredential(settings.apikey), 
+//     endpoint);
+// const documents = [];
+// const translation = "";
+// const sentiment = "";
+const sentence = "";
 
 function onGo(){
-  documents.push(sentence);
-  documents.push("text: " + sentence);
-  sentiment = await taclient.analyzeSentiment(documents);
-  translation = await ttclient.translator.detect(documents);
+  // documents.push(sentence);
+  // documents.push("text: " + sentence);
+  // sentiment = await taclient.analyzeSentiment(documents);
+  // translation = await ttclient.translator.detect(documents);
 
 }
 
