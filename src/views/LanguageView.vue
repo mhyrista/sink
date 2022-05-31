@@ -71,6 +71,33 @@ function onGo(){
 
 <template>
 
+  <div class="btn-group">
+    <input type="radio" name="options" data-title="de-DE" class="btn" checked />
+    <input type="radio" name="options" data-title="en-US" class="btn" />
+    <input type="radio" name="options" data-title="es-ES" class="btn" />
+    <input type="radio" name="options" data-title="fr-FR" class="btn" />
+    <input type="radio" name="options" data-title="hi-IN" class="btn" />
+  </div>
+
+  <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
+
+    <div class="btn-group">
+    <input type="radio" name="options" data-title="de-DE" class="btn" checked />
+    <input type="radio" name="options" data-title="en-US" class="btn" />
+    <input type="radio" name="options" data-title="es-ES" class="btn" />
+    <input type="radio" name="options" data-title="fr-FR" class="btn" />
+    <input type="radio" name="options" data-title="hi-IN" class="btn" />
+  </div>
+
+  <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
+    <div class="collapse-title text-xl font-medium">
+      translation result
+    </div>
+    <div class="collapse-content"> 
+      <p>tabindex="0" more info</p>
+    </div>
+  </div>
+
   <div class="form-control">
     <div class="input-group">
       <select class="select select-bordered">
