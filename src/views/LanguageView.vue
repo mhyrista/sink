@@ -78,7 +78,6 @@ function onGo(){
       <input type="radio" name="options" data-title="fr-FR" class="btn" />
       <input type="radio" name="options" data-title="hi-IN" class="btn" />
     </div>
-
     <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
     <button class="btn" @click="onGo">translate</button>
   </div>
