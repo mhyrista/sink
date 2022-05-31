@@ -71,7 +71,7 @@ function onGo(){
 
 <template>
 
-  <div class="btn-group">
+  <div class="input-language">
     <input type="radio" name="options" data-title="de-DE" class="btn" checked />
     <input type="radio" name="options" data-title="en-US" class="btn" />
     <input type="radio" name="options" data-title="es-ES" class="btn" />
@@ -81,12 +81,12 @@ function onGo(){
 
   <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
 
-    <div class="btn-group">
-    <input type="radio" name="options" data-title="de-DE" class="btn" checked />
-    <input type="radio" name="options" data-title="en-US" class="btn" />
-    <input type="radio" name="options" data-title="es-ES" class="btn" />
-    <input type="radio" name="options" data-title="fr-FR" class="btn" />
-    <input type="radio" name="options" data-title="hi-IN" class="btn" />
+    <div class="output-language">
+    <input type="radio" name="de-DE" data-title="german" class="btn" />
+    <input type="radio" name="en-US" data-title="english" class="btn" checked />
+    <input type="radio" name="es-ES" data-title="spanish" class="btn" />
+    <input type="radio" name="fr-FR" data-title="french" class="btn" />
+    <input type="radio" name="hi-IN" data-title="hindi" class="btn" />
   </div>
 
   <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
