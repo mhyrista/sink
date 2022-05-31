@@ -80,13 +80,20 @@ function onGo(){
   </div>
 
   <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
-
+  <div class="form-control">
+    <div class="input-group">
+      <label class="input-group">
+        <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
+        <button class="btn" @click="onGo">translate</button>
+      </label>
+    </div>
+  </div>
   <div class="btn-group">
-    <input type="radio" name="de-DE" data-title="german" class="btn" />
-    <input type="radio" name="en-US" data-title="english" class="btn" checked />
-    <input type="radio" name="es-ES" data-title="spanish" class="btn" />
-    <input type="radio" name="fr-FR" data-title="french" class="btn" />
-    <input type="radio" name="hi-IN" data-title="hindi" class="btn" />
+    <input type="radio" name="options" data-title="german" class="btn" />
+    <input type="radio" name="options" data-title="english" class="btn" checked />
+    <input type="radio" name="options" data-title="spanish" class="btn" />
+    <input type="radio" name="options" data-title="french" class="btn" />
+    <input type="radio" name="options" data-title="hindi" class="btn" />
   </div>
 
   <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
