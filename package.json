@@ -23,6 +23,7 @@
     "microsoft-cognitiveservices-speech-sdk": "^1.21.0",
     "pinia": "^2.0.13",
     "pinia-plugin-persistedstate": "^1.5.1",
+    "settings-store": "^1.4.1",
     "uuid": "^8.3.2",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"
