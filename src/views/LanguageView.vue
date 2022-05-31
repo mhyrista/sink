@@ -31,31 +31,31 @@ function onGo(){
 
 }
 
-function translateText(){
-    let options = {
-        method: 'POST',
-        baseUrl: endpoint,
-        url: 'translate',
-        qs: {
-          'api-version': '3.0',
-          'to': [language1, language2]
-        },
-        headers: {
-          'Ocp-Apim-Subscription-Key': settings.apikey,
-          'Ocp-Apim-Subscription-Region': settings.azureregion,
-          'Content-type': 'application/json',
-          'X-ClientTraceId': uuidv4().toString()
-        },
-        body: [{
-              'text': sentence
-        }],
-        json: true,
-    };
+// function translateText(){
+//     let options = {
+//         method: 'POST',
+//         baseUrl: endpoint,
+//         url: 'translate',
+//         qs: {
+//           'api-version': '3.0',
+//           'to': [language1, language2]
+//         },
+//         headers: {
+//           'Ocp-Apim-Subscription-Key': settings.apikey,
+//           'Ocp-Apim-Subscription-Region': settings.azureregion,
+//           'Content-type': 'application/json',
+//           'X-ClientTraceId': uuidv4().toString()
+//         },
+//         body: [{
+//               'text': sentence
+//         }],
+//         json: true,
+//     };
 
-    request(options, function(err, res, body){
-        console.log(JSON.stringify(body, null, 4));
-    });
-};
+//     request(options, function(err, res, body){
+//         console.log(JSON.stringify(body, null, 4));
+//     });
+// };
 
 // Call the function to translate text.
 translateText();
