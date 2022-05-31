@@ -23,7 +23,7 @@ const language1 = "";
 const language2 = "";
 
 function onGo(){
-  //translation = "das funktioniert noch nicjt"
+  translation = "das funktioniert noch nicjt"
   // documents.push(sentence);
   // documents.push("text: " + sentence);
   // sentiment = await taclient.analyzeSentiment(documents);
@@ -130,5 +130,5 @@ function onGo(){
       </select>
     </div>
   </div>
-  To do: translation
+  To do: {{ translation }}
 </template>
