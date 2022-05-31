@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-// import { useSettingsStore } from "@/stores/settings";
+import { useSettingsStore } from "@/stores/settings";
 
 // import {
 //   TranslatorTextClient,
@@ -11,24 +11,54 @@ import { reactive } from "vue";
 //   AzureKeyCredential,
 // } from "@azure/ai-text-analytics";
 
-// const settings = useSettingsStore();
-// const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
-// const taclient = new TextAnalyticsClient(endpoint,
-//     new AzureKeyCredential(settings.apikey));
-// const ttclient = new TranslatorTextClient(new AzureKeyCredential(settings.apikey), 
-//     endpoint);
+const uuidv4 = require('uuid/v4');
+const request = require('request');
+const settings = useSettingsStore();
+const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 // const documents = [];
-// const translation = "";
+var translation = "";
 // const sentiment = "";
 const sentence = "";
+const language1 = "";
+const language2 = "";
 
 function onGo(){
+  translation = "das funktioniert noch nicjt"
   // documents.push(sentence);
   // documents.push("text: " + sentence);
   // sentiment = await taclient.analyzeSentiment(documents);
   // translation = await ttclient.translator.detect(documents);
 
 }
+
+function translateText(){
+    let options = {
+        method: 'POST',
+        baseUrl: endpoint,
+        url: 'translate',
+        qs: {
+          'api-version': '3.0',
+          'to': [language1, language2]
+        },
+        headers: {
+          'Ocp-Apim-Subscription-Key': settings.apikey,
+          'Ocp-Apim-Subscription-Region': settings.azureregion,
+          'Content-type': 'application/json',
+          'X-ClientTraceId': uuidv4().toString()
+        },
+        body: [{
+              'text': sentence
+        }],
+        json: true,
+    };
+
+    request(options, function(err, res, body){
+        console.log(JSON.stringify(body, null, 4));
+    });
+};
+
+// Call the function to translate text.
+translateText();
 
 // function startRecording() {
 //   console.log("Recording started...");
@@ -100,6 +130,5 @@ function onGo(){
       </select>
     </div>
   </div>
-  To do: Input Text - Translate text into several languages (select language
-  from a dropdown) - sentiment analyse
+  To do: {{ translation }}
 </template>
