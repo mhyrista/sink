@@ -38,30 +38,23 @@ function translateText(){
     (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data[0].translations[0]["text"]));
   })
 };
+
 </script>
 
 <template>
+  <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" id="inputtext"/>
   <div class="form-control">
     <div class="input-group">
-      <label class="input-group">
-        <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" id="inputtext"/>
-        <button class="btn" @click="send">translate</button>
-      </label>
-    </div>
-  </div>
-  <div class="form-control">
-    <div class="btn-group">
       <select class="select select-bordered" v-model="language">
-        <input type="radio" name="options" data-title="de" class="btn" />
-        <input type="radio" name="options" data-title="en" class="btn" checked />
-        <input type="radio" name="options" data-title="es" class="btn" />
-        <input type="radio" name="options" data-title="fr" class="btn" />
+        <option disabled selected>Pick a language you want to translate into</option>
+        <option>de</option>
+        <option>en</option>
+        <option>es</option>
+        <option>fr</option>
+        <option>hi</option>
       </select>
+      <button class="btn" @click="send">translate</button>
     </div>
-    <div class="input-group">
-      <label class="input-group">
-        <input type="text" class="input input-bordered" id="translation"/>
-      </label>
-    </div>
+    <input type="text" placeholder="translation" class="input input-bordered" id="translation"/>
   </div>
 </template>
