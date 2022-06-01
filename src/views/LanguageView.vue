@@ -49,7 +49,7 @@ function translateText(){
         'to': [language2]
     },
     data: [{
-        'text': inputsentence
+        'text': "Manchmal bin ich wirklich unzufrieden mit meinem Job"
     }],
     responseType: 'json'
   }).then(function(response){
