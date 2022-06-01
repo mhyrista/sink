@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 const settings = useSettingsStore();
 // const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language2 = "";
-var translation = "";
+var language1 = "";
 var inputsentence = "";
 
 function send(){
@@ -46,6 +46,7 @@ function translateText(){
     },
     params: {
         'api-version': '3.0',
+        'from': [language1],
         'to': [language2]
     },
     data: [{
@@ -92,6 +93,16 @@ function translateText(){
 <template>
   <div class="form-control">
     <div class="input-group">
+      <select class="select select-bordered" v-model="language1">
+        <option disabled selected>Pick a language</option>
+        <option selected>de</option>
+        <option>en</option>
+        <option>es</option>
+        <option>fr</option>
+        <option>hi</option>
+      </select>
+    </div>
+    <div class="input-group">
       <label class="input-group">
         <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" id="inputtext"/>
         <button class="btn" @click="send">translate</button>
@@ -103,7 +114,7 @@ function translateText(){
       <select class="select select-bordered" v-model="language2">
         <option disabled selected>Pick a language</option>
         <option>de</option>
-        <option>en</option>
+        <option selected>en</option>
         <option>es</option>
         <option>fr</option>
         <option>hi</option>
