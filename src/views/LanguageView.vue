@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-//import { useSettingsStore } from "@/stores/settings";
+import { useSettingsStore } from "@/stores/settings";
 
 // import {
 //   TranslatorTextClient,
@@ -11,56 +11,74 @@ import { reactive } from "vue";
 //   AzureKeyCredential,
 // } from "@azure/ai-text-analytics";
 
-// const uuidv4 = require('uuid/v4');
-// const request = require('request');
-// const settings = useSettingsStore();
-// const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
-// const documents = [];
+const uuidv4 = require('uuid/v4');
+const axios = require('axios').default;
+const settings = useSettingsStore();
+const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 // const sentiment = "";
 // var translate = "";
 const sentence = "";
-const language1 = "";
-const language2 = "";
+var language1 = "";
+var language2 = "";
+var inputsentence = "";
 
 function send(){
   // translate = "something ka";
   let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
-  (document.getElementById("translation")! as HTMLInputElement).value = inputsentence;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
-  // sentiment = await taclient.analyzeSentiment(documents);
-  // translation = await ttclient.translator.detect(documents);
+  translateText();
 
 }
 
-// function translateText(){
-//     let options = {
-//         method: 'POST',
-//         baseUrl: endpoint,
-//         url: 'translate',
-//         qs: {
-//           'api-version': '3.0',
-//           'to': [language1, language2]
-//         },
-//         headers: {
-//           'Ocp-Apim-Subscription-Key': settings.apikey,
-//           'Ocp-Apim-Subscription-Region': settings.azureregion,
-//           'Content-type': 'application/json',
-//           'X-ClientTraceId': uuidv4().toString()
-//         },
-//         body: [{
-//               'text': sentence
-//         }],
-//         json: true,
-//     };
+function translateText(){
 
-//     request(options, function(err, res, body){
-//         console.log(JSON.stringify(body, null, 4));
-//     });
-// };
+  axios({
+    baseURL: endpoint,
+    url: '/translate',
+    method: 'post',
+    headers: {
+        'Ocp-Apim-Subscription-Key': settings.apikey,
+        'Ocp-Apim-Subscription-Region': settings.azureregion,
+        'Content-type': 'application/json',
+        'X-ClientTraceId': uuidv4().toString()
+    },
+    params: {
+        'api-version': '3.0',
+        'to': [language2]
+    },
+    data: [{
+        'text': inputsentence
+    }],
+    responseType: 'json'
+  }).then(function(response){
+    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.tanslations.text, null, 4));
+  })
 
-// Call the function to translate text.
-// translateText();
+    // let options = {
+    //     method: 'POST',
+    //     baseUrl: endpoint,
+    //     url: 'translate',
+    //     qs: {
+    //       'api-version': '3.0',
+    //       'to': [language1, language2]
+    //     },
+    //     headers: {
+    //       'Ocp-Apim-Subscription-Key': settings.apikey,
+    //       'Ocp-Apim-Subscription-Region': settings.azureregion,
+    //       'Content-type': 'application/json',
+    //       'X-ClientTraceId': uuidv4().toString()
+    //     },
+    //     body: [{
+    //           'text': inputsentence
+    //     }],
+    //     json: true,
+    // };
+
+    // request(options, function(err, res, body){
+    //     console.log(JSON.stringify(body, null, 4));
+    // });
+};
 
 // function startRecording() {
 //   console.log("Recording started...");
@@ -104,16 +122,6 @@ function send(){
 <template>
   <div class="form-control">
     <div class="input-group">
-      <select class="select select-bordered">
-        <option disabled selected>Pick a language</option>
-        <option>de-DE</option>
-        <option>en-US</option>
-        <option>es-ES</option>
-        <option>fr-FR</option>
-        <option>hi-IN</option>
-      </select>
-    </div>
-    <div class="input-group">
       <label class="input-group">
         <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" id="inputtext"/>
         <button class="btn" @click="send">translate</button>
@@ -122,13 +130,13 @@ function send(){
   </div>
   <div class="form-control">
     <div class="input-group">
-      <select class="select select-bordered">
+      <select class="select select-bordered" v-model="language2">
         <option disabled selected>Pick a language</option>
-        <option>de-DE</option>
-        <option>en-US</option>
-        <option>es-ES</option>
-        <option>fr-FR</option>
-        <option>hi-IN</option>
+        <option>de</option>
+        <option>en</option>
+        <option>es</option>
+        <option>fr</option>
+        <option>hi</option>
       </select>
     </div>
     <div class="input-group">
