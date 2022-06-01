@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import { useSettingsStore } from "@/stores/settings";
+// import { useSettingsStore } from "@/stores/settings";
+import { useSettingsStore } from "../stores/settings";
 
 import {
   SpeechConfig,

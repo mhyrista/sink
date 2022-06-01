@@ -114,7 +114,7 @@ function onGo(){
     <div class="input-group">
       <label class="input-group">
         <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
-        <button class="btn" @click="onGo">translate</button>
+        <button class="btn" onlick="onGo()">translate</button>
       </label>
     </div>
   </div>
