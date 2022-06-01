@@ -12,7 +12,7 @@ import { useSettingsStore } from "@/stores/settings";
 // } from "@azure/ai-text-analytics";
 
 // const { v4: uuidv4 } = require('uuid');
-// const axios = require('axios').default;
+const axios = require('axios').default;
 const settings = useSettingsStore();
 const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language2 = "";
@@ -22,7 +22,7 @@ var inputsentence = "";
 function send(){
   // translate = "something ka";
   let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
-  (document.getElementById("translation")! as HTMLInputElement).value = translation;
+  (document.getElementById("translation")! as HTMLInputElement).value = inputsentence;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
   // translateText();
