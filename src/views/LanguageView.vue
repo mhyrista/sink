@@ -19,11 +19,9 @@ const settings = useSettingsStore();
 // const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language2 = "";
 var language1 = "";
-var inputsentence = "";
 
 function send(){
   // translate = "something ka";
-  let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
   translateText();
@@ -50,7 +48,7 @@ function translateText(){
         'to': [language2]
     },
     data: [{
-        'text': inputsentence
+        'text': (document.getElementById("inputtext")! as HTMLInputElement).value
     }],
     responseType: 'json'
   }).then(function(response){
@@ -93,9 +91,9 @@ function translateText(){
 <template>
   <div class="form-control">
     <div class="input-group">
-      <select class="select select-bordered" v-model="language1">
+      <select class="select select-bordered w-full max-w-xs" v-model="language1">
         <option disabled selected>Pick a language</option>
-        <option selected>de</option>
+        <option>de</option>
         <option>en</option>
         <option>es</option>
         <option>fr</option>
@@ -111,10 +109,10 @@ function translateText(){
   </div>
   <div class="form-control">
     <div class="input-group">
-      <select class="select select-bordered" v-model="language2">
+      <select class="select select-bordered w-full max-w-xs" v-model="language2">
         <option disabled selected>Pick a language</option>
         <option>de</option>
-        <option selected>en</option>
+        <option>en</option>
         <option>es</option>
         <option>fr</option>
         <option>hi</option>
