@@ -11,14 +11,10 @@ import { useSettingsStore } from "@/stores/settings";
 //   AzureKeyCredential,
 // } from "@azure/ai-text-analytics";
 
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const axios = require('axios').default;
 const settings = useSettingsStore();
 const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
-// const sentiment = "";
-// var translate = "";
-const sentence = "";
-var language1 = "";
 var language2 = "";
 var inputsentence = "";
 
@@ -27,58 +23,34 @@ function send(){
   let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
-  translateText();
+  // translateText();
 
 }
 
-function translateText(){
+// function translateText(){
 
-  axios({
-    baseURL: endpoint,
-    url: '/translate',
-    method: 'post',
-    headers: {
-        'Ocp-Apim-Subscription-Key': settings.apikey,
-        'Ocp-Apim-Subscription-Region': settings.azureregion,
-        'Content-type': 'application/json',
-        'X-ClientTraceId': uuidv4().toString()
-    },
-    params: {
-        'api-version': '3.0',
-        'to': [language2]
-    },
-    data: [{
-        'text': inputsentence
-    }],
-    responseType: 'json'
-  }).then(function(response){
-    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.tanslations.text, null, 4));
-  })
-
-    // let options = {
-    //     method: 'POST',
-    //     baseUrl: endpoint,
-    //     url: 'translate',
-    //     qs: {
-    //       'api-version': '3.0',
-    //       'to': [language1, language2]
-    //     },
-    //     headers: {
-    //       'Ocp-Apim-Subscription-Key': settings.apikey,
-    //       'Ocp-Apim-Subscription-Region': settings.azureregion,
-    //       'Content-type': 'application/json',
-    //       'X-ClientTraceId': uuidv4().toString()
-    //     },
-    //     body: [{
-    //           'text': inputsentence
-    //     }],
-    //     json: true,
-    // };
-
-    // request(options, function(err, res, body){
-    //     console.log(JSON.stringify(body, null, 4));
-    // });
-};
+//   axios({
+//     baseURL: endpoint,
+//     url: '/translate',
+//     method: 'post',
+//     headers: {
+//         'Ocp-Apim-Subscription-Key': settings.apikey,
+//         'Ocp-Apim-Subscription-Region': settings.azureregion,
+//         'Content-type': 'application/json',
+//         'X-ClientTraceId': uuidv4().toString()
+//     },
+//     params: {
+//         'api-version': '3.0',
+//         'to': [language2]
+//     },
+//     data: [{
+//         'text': inputsentence
+//     }],
+//     responseType: 'json'
+//   }).then(function(response){
+//     (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.tanslations.text, null, 4));
+//   })
+// };
 
 // function startRecording() {
 //   console.log("Recording started...");
