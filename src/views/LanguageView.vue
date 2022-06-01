@@ -25,8 +25,7 @@ const language2 = "";
 function send(){
   // translate = "something ka";
   let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
-  let translatedsentence = (document.getElementById("translation")! as HTMLInputElement).value;
-  translatedsentence = inputsentence
+  (document.getElementById("translation")! as HTMLInputElement).value = inputsentence;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
   // sentiment = await taclient.analyzeSentiment(documents);
@@ -117,7 +116,7 @@ function send(){
     <div class="input-group">
       <label class="input-group">
         <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" id="inputtext"/>
-        <button class="btn" onclick="send()">translate</button>
+        <button class="btn" @click="send">translate</button>
       </label>
     </div>
   </div>
