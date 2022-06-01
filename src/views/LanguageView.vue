@@ -16,14 +16,15 @@ import { reactive } from "vue";
 // const settings = useSettingsStore();
 // const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 // const documents = [];
-var translation = "";
 // const sentiment = "";
+var translate = "";
 const sentence = "";
 const language1 = "";
 const language2 = "";
 
-function onGo(){
-  translation = "das funktioniert noch nicjt"
+function send(){
+  translate = "something ka";
+  //document.getElementById("translation").value = document.getElementById("inputtext").value;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
   // sentiment = await taclient.analyzeSentiment(documents);
@@ -113,8 +114,8 @@ function onGo(){
     </div>
     <div class="input-group">
       <label class="input-group">
-        <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" v-model="sentence"/>
-        <button class="btn" onlick="onGo()">translate</button>
+        <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" id="inputtext"/>
+        <button class="btn" onclick="send()">translate</button>
       </label>
     </div>
   </div>
@@ -129,6 +130,11 @@ function onGo(){
         <option>hi-IN</option>
       </select>
     </div>
+    <div class="input-group">
+      <label class="input-group">
+        <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" id="translation"/>
+      </label>
+    </div>
   </div>
-  To do: {{ translation }}
+  try like this: {{translate}}
 </template>
