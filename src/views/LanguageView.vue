@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 // const { v4: uuidv4 } = require('uuid');
 // const axios = require('axios').default;
 const settings = useSettingsStore();
-const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
+// const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language2 = "";
 var translation = "";
 var inputsentence = "";
@@ -35,7 +35,7 @@ function translateText(){
   // (document.getElementById("translation")! as HTMLInputElement).value = inputsentence;
 
   axios({
-    baseURL: endpoint,
+    baseURL: 'https://api.cognitive.microsofttranslator.com',
     url: '/translate',
     method: 'post',
     headers: {
