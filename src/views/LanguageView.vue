@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { useSettingsStore } from "@/stores/settings";
+import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
 
 // import {
 //   TranslatorTextClient,
@@ -12,7 +14,7 @@ import { useSettingsStore } from "@/stores/settings";
 // } from "@azure/ai-text-analytics";
 
 // const { v4: uuidv4 } = require('uuid');
-const axios = require('axios').default;
+// const axios = require('axios').default;
 const settings = useSettingsStore();
 const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language2 = "";
@@ -22,44 +24,38 @@ var inputsentence = "";
 function send(){
   // translate = "something ka";
   let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
-  (document.getElementById("translation")! as HTMLInputElement).value = inputsentence;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
-  // translateText();
+  translateText();
 
 }
 
-// function translateText(){
+function translateText(){
 
-//   axios({
-//     baseURL: endpoint,
-//     url: '/translate',
-//     method: 'post',
-//     headers: {
-//         'Ocp-Apim-Subscription-Key': settings.apikey,
-//         'Ocp-Apim-Subscription-Region': settings.azureregion,
-//         'Content-type': 'application/json',
-//         'X-ClientTraceId': uuidv4().toString()
-//     },
-//     params: {
-//         'api-version': '3.0',
-//         'to': [language2]
-//     },
-//     data: [{
-//         'text': inputsentence
-//     }],
-//     responseType: 'json'
-//   }).then(function(response){
-//     (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.tanslations.text, null, 4));
-//   })
-// };
+  // (document.getElementById("translation")! as HTMLInputElement).value = inputsentence;
 
-// function startRecording() {
-//   console.log("Recording started...");
-//   navigator.mediaDevices
-//     .getUserMedia({ audio: true, video: false })
-//     .then(onStream);
-// }
+  axios({
+    baseURL: endpoint,
+    url: '/translate',
+    method: 'post',
+    headers: {
+        'Ocp-Apim-Subscription-Key': settings.apikey,
+        'Ocp-Apim-Subscription-Region': settings.azureregion,
+        'Content-type': 'application/json',
+        'X-ClientTraceId': uuidv4().toString()
+    },
+    params: {
+        'api-version': '3.0',
+        'to': [language2]
+    },
+    data: [{
+        'text': inputsentence
+    }],
+    responseType: 'json'
+  }).then(function(response){
+    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.tanslations.text, null, 4));
+  })
+};
 
 // const state = reactive({ text: "" });
 // var recognizer: SpeechRecognizer;
