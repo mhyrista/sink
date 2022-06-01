@@ -53,7 +53,7 @@ function translateText(){
     }],
     responseType: 'json'
   }).then(function(response){
-    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.translations[0]["text"]));
+    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data[0].translations[0]["text"]));
   })
 };
 
