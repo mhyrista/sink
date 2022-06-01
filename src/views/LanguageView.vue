@@ -49,11 +49,11 @@ function translateText(){
         'to': [language2]
     },
     data: [{
-        'text': "Manchmal bin ich wirklich unzufrieden mit meinem Job"
+        'text': inputsentence
     }],
     responseType: 'json'
   }).then(function(response){
-    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.tanslations.text, null, 4));
+    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data, null, 4));
   })
 };
 
