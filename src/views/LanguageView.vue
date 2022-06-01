@@ -17,14 +17,16 @@ import { reactive } from "vue";
 // const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 // const documents = [];
 // const sentiment = "";
-var translate = "";
+// var translate = "";
 const sentence = "";
 const language1 = "";
 const language2 = "";
 
 function send(){
-  translate = "something ka";
-  //document.getElementById("translation").value = document.getElementById("inputtext").value;
+  // translate = "something ka";
+  let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
+  let translatedsentence = (document.getElementById("translation")! as HTMLInputElement).value;
+  translatedsentence = inputsentence
   // documents.push(sentence);
   // documents.push("text: " + sentence);
   // sentiment = await taclient.analyzeSentiment(documents);
@@ -132,9 +134,8 @@ function send(){
     </div>
     <div class="input-group">
       <label class="input-group">
-        <input type="text" placeholder="I am really interested in AI and happy to try it" class="input input-bordered" id="translation"/>
+        <input type="text" class="input input-bordered" id="translation"/>
       </label>
     </div>
   </div>
-  try like this: {{translate}}
 </template>
