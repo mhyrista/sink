@@ -4,36 +4,18 @@ import { useSettingsStore } from "@/stores/settings";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 
-// import {
-//   TranslatorTextClient,
-// } from "@azure/cognitiveservices-translatortext";
-
-// import {
-//   TextAnalyticsClient,
-//   AzureKeyCredential,
-// } from "@azure/ai-text-analytics";
-
-// const { v4: uuidv4 } = require('uuid');
-// const axios = require('axios').default;
 const settings = useSettingsStore();
-// const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language = "";
 var inputsentence = "";
 var res = "";
 
 function send(){
-  // translate = "something ka";
   inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
-  // documents.push(sentence);
-  // documents.push("text: " + sentence);
   translateText();
 
 }
 
 function translateText(){
-
-  // (document.getElementById("translation")! as HTMLInputElement).value = inputsentence;
-
   axios({
     baseURL: 'https://api.cognitive.microsofttranslator.com',
     url: '/translate',
@@ -56,37 +38,6 @@ function translateText(){
     (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data[0].translations[0]["text"]));
   })
 };
-
-// const state = reactive({ text: "" });
-// var recognizer: SpeechRecognizer;
-// var selectedLanguage = "";
-
-// function onStream(stream: MediaStream) {
-//   const speechConfig = SpeechConfig.fromSubscription(
-//     settings.apikey,
-//     settings.azureregion
-//   );
-//   speechConfig.speechRecognitionLanguage = selectedLanguage;
-//   const audioConfig = AudioConfig.fromStreamInput(stream);
-//   recognizer = new SpeechRecognizer(speechConfig, audioConfig);
-//   recognizer.recognizing = onRegonitionResult;
-//   recognizer.recognized = onRegonitionResult;
-//   recognizer.startContinuousRecognitionAsync();
-// }
-
-// function onRegonitionResult(
-//   sender: any,
-//   event: SpeechRecognitionEventArgs
-// ): void {
-//   state.text = event.result.text;
-// }
-// function onResult(): void {
-//   recognizer.stopContinuousRecognitionAsync();
-// }
-// function onChange(e: any) {
-//   selectedLanguage = e.target.value;
-//   console.log(e.target.value);
-// }
 </script>
 
 <template>
@@ -99,14 +50,12 @@ function translateText(){
     </div>
   </div>
   <div class="form-control">
-    <div class="input-group">
+    <div class="btn-group">
       <select class="select select-bordered" v-model="language">
-        <option disabled selected>Pick a language</option>
-        <option>de</option>
-        <option selected>en</option>
-        <option>es</option>
-        <option>fr</option>
-        <option>hi</option>
+        <input type="radio" name="options" data-title="de" class="btn" />
+        <input type="radio" name="options" data-title="en" class="btn" checked />
+        <input type="radio" name="options" data-title="es" class="btn" />
+        <input type="radio" name="options" data-title="fr" class="btn" />
       </select>
     </div>
     <div class="input-group">
