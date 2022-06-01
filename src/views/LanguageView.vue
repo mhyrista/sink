@@ -22,10 +22,9 @@ var inputsentence = "";
 
 function send(){
   // translate = "something ka";
-  let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
+  inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
-  return inputsentence;
   translateText();
 
 }
