@@ -19,6 +19,7 @@ const settings = useSettingsStore();
 // const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language = "";
 var inputsentence = "";
+var res = "";
 
 function send(){
   // translate = "something ka";
@@ -52,7 +53,7 @@ function translateText(){
     }],
     responseType: 'json'
   }).then(function(response){
-    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.translations.text, null, 4));
+    (document.getElementById("translation")! as HTMLInputElement).value = (JSON.stringify(response.data.translations[0]));
   })
 };
 
