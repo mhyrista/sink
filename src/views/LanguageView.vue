@@ -11,8 +11,8 @@ import { useSettingsStore } from "@/stores/settings";
 //   AzureKeyCredential,
 // } from "@azure/ai-text-analytics";
 
-const { v4: uuidv4 } = require('uuid');
-const axios = require('axios').default;
+// const { v4: uuidv4 } = require('uuid');
+// const axios = require('axios').default;
 const settings = useSettingsStore();
 const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language2 = "";
