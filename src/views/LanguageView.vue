@@ -50,7 +50,7 @@ function translateText(){
         'to': [language2]
     },
     data: [{
-        'text': inputsentence
+        'text': "ich bin nicht unbedingt glücklich"
     }],
     responseType: 'json'
   }).then(function(response){
