@@ -16,11 +16,13 @@ const axios = require('axios').default;
 const settings = useSettingsStore();
 const endpoint = "https://" + settings.azureregion + ".api.cognitive.microsoft.com/";
 var language2 = "";
+var translation = "";
 var inputsentence = "";
 
 function send(){
   // translate = "something ka";
   let inputsentence = (document.getElementById("inputtext")! as HTMLInputElement).value;
+  (document.getElementById("translation")! as HTMLInputElement).value = translation;
   // documents.push(sentence);
   // documents.push("text: " + sentence);
   // translateText();
