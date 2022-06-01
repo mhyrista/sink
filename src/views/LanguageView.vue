@@ -46,7 +46,7 @@ function translateText(){
     },
     params: {
         'api-version': '3.0',
-        'from': [language1],
+        // 'from': [language1],
         'to': [language2]
     },
     data: [{
