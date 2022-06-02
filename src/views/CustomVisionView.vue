@@ -18,10 +18,13 @@ function stopRecording() {
   var photo = document.getElementById('photo');
   var video = <HTMLCanvasElement> document.getElementById('video');
   var context = canvas!.getContext('2d');
+  // returns drawing context on the canvas - 2d enables drawImage
   var height = parseInt(video!.getAttribute('height') as string);
   var width = parseInt(video!.getAttribute('width') as string);
   context!.drawImage(video, 0, 0, width, height);
+  // draw an image onto the canvas
   var data = canvas!.toDataURL('image/png');
+  // gives an image as data URI back
   photo!.setAttribute('src', data);
   state.stream.getTracks().forEach((track) => track.stop());
   state.playing = false;
