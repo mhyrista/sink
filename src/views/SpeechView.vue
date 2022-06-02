@@ -70,13 +70,13 @@ function onChange(e: any) {
       <option>hi-IN</option>
     </select>
   </div>
-  <button class="btn gap-2" @click="startRecording" v-if="state.playing=false">
-    <font-awesome-icon icon="microphone" />
-    Start Recording
-  </button>
   <button class="btn gap-2" @click="stopRecording" v-if="state.playing">
     <font-awesome-icon icon="microphone" />
     Stop Recording
+  </button>
+  <button class="btn gap-2" @click="startRecording" v-else>
+    <font-awesome-icon icon="microphone" />
+    Start Recording
   </button>
   {{ state.text }}
   <!-- To dos: Add button where language is selected - translate speech to serveral
