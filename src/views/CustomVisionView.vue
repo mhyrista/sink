@@ -54,7 +54,8 @@ function onStream(stream: MediaStream) {
   <div class="camera" v-if="state.playing">
     <video id="video" autoplay :srcObject="state.stream" type="video/mp4">Video stream not yet available.</video>
   </div>
-  <canvas id="canvas" v-else>
+  <!-- <canvas id="canvas" v-else> -->
+  <canvas id="canvas">
     <div class="output">
       <img id="photo" alt="The screen capture will appear in this box.">
     </div>
