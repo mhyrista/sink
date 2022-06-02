@@ -1,33 +1,39 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 
-function startRecording() {
-  console.log("Video recording started...");
-  navigator.mediaDevices
-    .getUserMedia({ audio: false, video: true })
-    .then(onStream);
-}
+var canvasv = <HTMLCanvasElement> document.getElementById('canvas');
+var photo = <HTMLCanvasElement> document.getElementById('photo');
+var videov = <HTMLVideoElement> document.getElementById('video');
 
 const state = reactive({
   stream: new MediaStream(),
   playing: false,
 });
 
+function startRecording() {
+  console.log("Video recording started...");
+  
+  navigator.mediaDevices
+    .getUserMedia({ audio: false, video: true })
+    .then(onStream);
+}
+
 function stopRecording() {
-  var canvas = <HTMLCanvasElement> document.getElementById('canvas');
-  var photo = document.getElementById('photo');
-  var video = <HTMLCanvasElement> document.getElementById('video');
-  var context = canvas.getContext('2d');
-  // returns drawing context on the canvas - 2d enables drawImage
-  var height = parseInt(video!.getAttribute('height') as string);
-  var width = parseInt(video!.getAttribute('width') as string);
-  context!.drawImage(video, 0, 0, width, height);
-  // draw an image onto the canvas
-  var data = canvas!.toDataURL('image/png');
-  // gives an image as data URI back
-  photo!.setAttribute('src', data);
   state.stream.getTracks().forEach((track) => track.stop());
   state.playing = false;
+  takePicture();
+}
+
+function takePicture() {
+  let context = canvasv.getContext('2d');
+  // returns drawing context on the canvas - 2d enables drawImage
+  // var height = parseInt(video!.getAttribute('height') as string);
+  // var width = parseInt(video!.getAttribute('width') as string);
+  context!.drawImage(videov, 0, 0, videov.videoWidth, videov.videoHeight);
+  // draw an image onto the canvas
+  var data = canvasv.toDataURL('image/png');
+  // gives an image as data URI back
+  photo.setAttribute('src', data);
 }
 
 function onStream(stream: MediaStream) {
