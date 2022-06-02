@@ -18,11 +18,18 @@ function startRecording() {
     .then(onStream);
 }
 
-const state = reactive({ text: "" });
+function stopRecording() {
+  state.stream.getTracks().forEach((track) => track.stop());
+  state.playing = false;
+}
+
+const state = reactive({ text: "", stream: new MediaStream(),playing: false});
 var recognizer: SpeechRecognizer;
 var selectedLanguage = "";
 
 function onStream(stream: MediaStream) {
+  state.stream = stream;
+  state.playing = true;
   const speechConfig = SpeechConfig.fromSubscription(
     settings.apikey,
     settings.azureregion
@@ -66,6 +73,10 @@ function onChange(e: any) {
   <button class="btn gap-2" @click="startRecording">
     <font-awesome-icon icon="microphone" />
     Start Recording
+  </button>
+  <button class="btn gap-2" @click="stopRecording" v-if="state.playing">
+    <font-awesome-icon icon="camera" />
+    Stop Video Recording
   </button>
   {{ state.text }}
   <!-- To dos: Add button where language is selected - translate speech to serveral
