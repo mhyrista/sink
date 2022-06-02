@@ -17,7 +17,7 @@ function stopRecording() {
   var canvas = <HTMLCanvasElement> document.getElementById('canvas');
   var photo = document.getElementById('photo');
   var video = <HTMLCanvasElement> document.getElementById('video');
-  var context = canvas!.getContext('2d');
+  var context = canvas.getContext('2d');
   // returns drawing context on the canvas - 2d enables drawImage
   var height = parseInt(video!.getAttribute('height') as string);
   var width = parseInt(video!.getAttribute('width') as string);
