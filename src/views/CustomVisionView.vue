@@ -19,8 +19,8 @@ function startRecording() {
 }
 
 function stopRecording() {
-  state.stream.getTracks().forEach((track) => track.stop());
-  state.playing = false;
+  // state.stream.getTracks().forEach((track) => track.stop());
+  // state.playing = false;
   takePicture();
 }
 
@@ -34,6 +34,8 @@ function takePicture() {
   var data = canvasv.toDataURL('image/png');
   // gives an image as data URI back
   photo.setAttribute('src', data);
+  state.stream.getTracks().forEach((track) => track.stop());
+  state.playing = false;
 }
 
 function onStream(stream: MediaStream) {
