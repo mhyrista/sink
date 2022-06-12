@@ -28,9 +28,9 @@ const router = createRouter({
       component: () => import("../views/FaceView.vue"),
     },
     {
-      path: "/language",
-      name: "language",
-      component: () => import("../views/LanguageView.vue"),
+      path: "/translator",
+      name: "translator",
+      component: () => import("../views/TranslatorView.vue"),
     },
     {
       path: "/formrecognizer",
@@ -46,6 +46,11 @@ const router = createRouter({
       path: "/computervision",
       name: "computervision",
       component: () => import("../views/ComputerVisionView.vue"),
+    },
+    {
+      path: "/sentiment",
+      name: "sentiment",
+      component: () => import("../views/SentimentView.vue"),
     },
     {
       path: "/settings",

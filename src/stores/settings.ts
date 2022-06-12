@@ -5,6 +5,9 @@ export const useSettingsStore = defineStore({
   state: () => ({
     apikey: "",
     azureregion: "",
+    predictionendpoint: "",
+    publishiterationname: "",
+    iterationid: "",
   }),
   persist: true,
 });

@@ -1,0 +1,247 @@
+<script setup lang="ts">
+import { reactive, computed } from "vue";
+import { FaceClient } from "@azure/cognitiveservices-face";
+import { ApiKeyCredentials } from "@azure/ms-rest-js";
+import { useSettingsStore } from "@/stores/settings";
+import type {
+  FaceAttributes,
+  FaceAttributeType,
+  FaceDetectWithStreamResponse,
+  Gender,
+} from "@azure/cognitiveservices-face/esm/models";
+import {
+  PredictionAPIClient,
+} from "@azure/cognitiveservices-customvision-prediction";
+// https://docs.microsoft.com/de-de/javascript/api/@azure/cognitiveservices-customvision-prediction/?view=azure-node-latest
+const settings = useSettingsStore();
+var imageUrl = "";
+function startRecording() {
+  console.log("Video recording started...");
+  navigator.mediaDevices
+    .getUserMedia({ audio: false, video: true })
+    .then(onStream);
+}
+const state = reactive({
+  stream: new MediaStream(),
+  playing: false,
+  image: "",
+  attributes: undefined as FaceAttributes | undefined,
+});
+function generateComputedEquality(
+  attribute: string | undefined,
+  value: string
+) {
+  return computed(() => {
+    return attribute == value;
+  });
+}
+function generateComputedThreshold(
+  attribute: number | undefined,
+  threshold = 0.1
+) {
+  return computed(() => {
+    return attribute && attribute > threshold;
+  });
+}
+const hasReadingGlasses = generateComputedEquality(
+  state.attributes?.glasses,
+  "ReadingGlasses"
+);
+const hasSunglasses = generateComputedEquality(
+  state.attributes?.glasses,
+  "Sunglasses"
+);
+const hasSwimmingGoggles = generateComputedEquality(
+  state.attributes?.glasses,
+  "SwimmingGoggles"
+);
+const hasNoGlasses = generateComputedEquality(
+  state.attributes?.glasses,
+  "NoGlasses"
+);
+const isFemale = generateComputedEquality(state.attributes?.gender, "female");
+const isMale = generateComputedEquality(state.attributes?.gender, "male");
+const isHappy = generateComputedThreshold(state.attributes?.emotion?.happiness);
+const isSurprised = generateComputedThreshold(
+  state.attributes?.emotion?.surprise
+);
+const isSad = generateComputedThreshold(state.attributes?.emotion?.sadness);
+const isDisgust = generateComputedThreshold(state.attributes?.emotion?.disgust);
+const isFear = generateComputedThreshold(state.attributes?.emotion?.happiness);
+const isNeutral = generateComputedThreshold(state.attributes?.emotion?.neutral);
+const isContempt = generateComputedThreshold(
+  state.attributes?.emotion?.contempt
+);
+const isAngry = generateComputedThreshold(state.attributes?.emotion?.anger);
+const hasMoustache = generateComputedThreshold(
+  state.attributes?.facialHair?.moustache,
+  0.0
+);
+const hasBeard = generateComputedThreshold(state.attributes?.facialHair?.beard);
+const hasSideburns = generateComputedThreshold(
+  state.attributes?.facialHair?.sideburns
+);
+const emotionPercentage = computed(() => {
+  let emotions = state.attributes?.emotion;
+  return {
+    anger: emotions?.anger ? (emotions.anger * 100).toFixed(2) : 0,
+    disgust: emotions?.disgust ? (emotions.disgust * 100).toFixed(2) : 0,
+    neutral: emotions?.neutral ? (emotions.neutral * 100).toFixed(2) : 0,
+    sad: emotions?.sadness ? (emotions.sadness * 100).toFixed(2) : 0,
+    contempt: emotions?.contempt ? (emotions.contempt * 100).toFixed(2) : 0,
+    happy: emotions?.happiness ? (emotions.happiness * 100).toFixed(2) : 0,
+    fear: emotions?.fear ? (emotions.fear * 100).toFixed(2) : 0,
+    surprised: emotions?.surprise ? (emotions.surprise * 100).toFixed(2) : 0,
+  };
+});
+function stopRecording() {
+  state.stream.getTracks().forEach((track) => track.stop());
+  state.playing = false;
+}
+function onStream(stream: MediaStream) {
+  state.stream = stream;
+  state.playing = true;
+}
+function takePicture() {
+  console.log("Trying to take picture...");
+  const track = state.stream.getVideoTracks()[0];
+  let imageCapture = new ImageCapture(track);
+  imageCapture
+    .takePhoto()
+    .catch((error: any) => console.log(error))
+    .then(usePicture);
+  console.log("Picture taken...");
+}
+function usePicture(blob: Blob | void) {
+  if (!blob) return;
+  console.log("Sending picture to face API...");
+  state.image = URL.createObjectURL(blob);
+  console.log(URL.createObjectURL(blob));
+  imageUrl = URL.createObjectURL(blob);
+  // imageUrl = URL.createObjectURL(blob).slice(5).toString();
+  // imageUrl = 'https://www.atlantatrails.com/wp-content/uploads/2019/02/north-georgia-waterfalls-1024x683.jpg';
+  // const credentials = new ApiKeyCredentials({
+  //   inHeader: { "Ocp-Apim-Subscription-Key": settings.faceApiKey },
+  // });
+  const credentials = new ApiKeyCredentials({ inHeader: { "Prediction-key": settings.predictionkey } });
+  const predictor = new PredictionAPIClient(credentials, settings.predictionendpoint);
+  // let faceClient = new FaceClient(credentials, settings.faceApiEndpoint);
+  // faceClient.face
+  //   .detectWithStream(blob, {
+  //     returnFaceAttributes: [
+  //       "age",
+  //       "emotion",
+  //       "gender",
+  //       "facialHair",
+  //       "glasses",
+  //     ],
+  //   })
+  //   .then(displayResult);
+  predictor.classifyImageUrlWithNoStore(settings.projectid, settings.publishiterationname, { url: imageUrl })
+    // .then(displayResult);
+    .then(result => {
+      console.log("The result is: ");
+      console.log(result);
+    })
+
+  // Show results
+  // console.log("Results:");
+  // results.predictions.forEach(predictedResult => {
+  //     console.log(`\t ${predictedResult.tagName}: ${(predictedResult.probability * 100.0).toFixed(2)}%`);
+  // });
+}
+function displayResult(response: FaceDetectWithStreamResponse) {
+  console.log("Response from Custom Vision...");
+  console.log(response);
+  if (response.length < 1) return;
+  var faceAttributes = response[0].faceAttributes;
+  state.attributes = faceAttributes;
+}
+</script>
+
+<template>
+  <button class="btn gap-2" @click="stopRecording" v-if="state.playing">
+    <font-awesome-icon icon="camera" />
+    Stop Video Recording
+  </button>
+  <button v-else class="btn gap-2" @click="startRecording">
+    <font-awesome-icon icon="camera" />
+    Start Video Recording
+  </button>
+  <video
+    autoplay
+    :srcObject="state.stream"
+    type="video/mp4"
+    v-if="state.playing"
+  ></video>
+  <button class="btn gap-2" @click="takePicture" v-if="state.playing">
+    <font-awesome-icon icon="camera" />
+    Take picture
+  </button>
+  <img :src="state.image" />
+  <div v-if="state.attributes">
+    Age:
+    <div class="badge badge-lg">{{ state.attributes?.age }}</div>
+    Gender:
+    <div v-if="isFemale" class="badge badge-lg gap-2">
+      <font-awesome-icon icon="venus" />
+      Perceived as female
+    </div>
+    <div v-if="isMale" class="badge badge-lg gap-2">
+      <font-awesome-icon icon="mars" />
+      Perceived as male
+    </div>
+    Emotion:
+    <div v-if="isAngry" class="badge badge-error gap-2 badge-lg">
+      anger: {{ emotionPercentage.anger }}%
+    </div>
+    <div v-if="isContempt" class="badge badge-success gap-2 badge-lg">
+      contempt: {{ emotionPercentage.contempt }}%
+    </div>
+    <div v-if="isDisgust" class="badge badge-error gap-2 badge-lg">
+      disgust: {{ emotionPercentage.disgust }}%
+    </div>
+    <div v-if="isHappy" class="badge badge-success gap-2 badge-lg">
+      happy: {{ emotionPercentage.happy }}%
+    </div>
+    <div v-if="isNeutral" class="badge badge-info gap-2 badge-lg">
+      neutral: {{ emotionPercentage.neutral }}%
+    </div>
+    <div v-if="isFear" class="badge badge-error gap-2 badge-lg">
+      fear: {{ emotionPercentage.fear }}%
+    </div>
+    <div v-if="isSad" class="badge badge-error gap-2 badge-lg">
+      sad: {{ emotionPercentage.sad }}%
+    </div>
+    <div v-if="isSurprised" class="badge badge-error gap-2 badge-lg">
+      surprised: {{ emotionPercentage.surprised }}%
+    </div>
+    Glasses:
+    <div v-if="hasReadingGlasses" class="badge badge-lg gap-2">
+      <font-awesome-icon icon="glasses" />
+      Reading glasses
+    </div>
+    <div v-if="hasNoGlasses" class="badge badge-lg gap-2">
+      <font-awesome-icon icon="glasses" />
+      No glasses
+    </div>
+    <div v-if="hasSwimmingGoggles" class="badge badge-lg gap-2">
+      <font-awesome-icon icon="glasses" />
+      Swimming goggles
+    </div>
+    <div v-if="hasSunglasses" class="badge badge-lg gap-2">
+      <font-awesome-icon icon="glasses" />
+      {{ state.attributes?.glasses }}
+    </div>
+    Facial hair:
+    <div v-if="hasMoustache" class="badge badge-lg gap-2">
+      {{ state.attributes?.facialHair?.moustache }}
+    </div>
+    <div v-if="hasBeard" class="badge badge-lg gap-2">
+      {{ state.attributes?.facialHair?.beard }}
+    </div>
+    <div v-if="hasSideburns" class="badge badge-lg gap-2">
+      {{ state.attributes?.facialHair?.sideburns }}
+    </div>
+  </div>
+</template>

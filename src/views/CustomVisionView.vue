@@ -1,67 +1,46 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
+import { ApiKeyCredentials } from "@azure/ms-rest-js";
+import { useSettingsStore } from "@/stores/settings";
+import {
+  PredictionAPIClient,
+} from "@azure/cognitiveservices-customvision-prediction";
 
-var canvasv = <HTMLCanvasElement> document.getElementById('canvas');
-var photo = <HTMLCanvasElement> document.getElementById('photo');
-var videov = <HTMLVideoElement> document.getElementById('video');
+const settings = useSettingsStore();
+var imageUrl = "";
+var predictionlength = 0;
 
-const state = reactive({
-  stream: new MediaStream(),
-  playing: false,
-});
-
-function startRecording() {
-  console.log("Video recording started...");
-  
-  navigator.mediaDevices
-    .getUserMedia({ audio: false, video: true })
-    .then(onStream);
-}
-
-function stopRecording() {
-  // state.stream.getTracks().forEach((track) => track.stop());
-  // state.playing = false;
-  takePicture();
-}
-
-function takePicture() {
-  let context = canvasv.getContext('2d');
-  // returns drawing context on the canvas - 2d enables drawImage
-  // var height = parseInt(video!.getAttribute('height') as string);
-  // var width = parseInt(video!.getAttribute('width') as string);
-  context!.drawImage(videov, 0, 0, videov.videoWidth, videov.videoHeight);
-  // draw an image onto the canvas
-  var data = canvasv.toDataURL('image/png');
-  // gives an image as data URI back
-  photo.setAttribute('src', data);
-  state.stream.getTracks().forEach((track) => track.stop());
-  state.playing = false;
-}
-
-function onStream(stream: MediaStream) {
-  state.stream = stream;
-  state.playing = true;
+function sendPicture() {
+  imageUrl = (document.getElementById("imagelink1")! as HTMLInputElement).value;
+  const credentials = new ApiKeyCredentials({ inHeader: { "Prediction-key": settings.apikey } });
+  const predictor = new PredictionAPIClient(credentials, settings.predictionendpoint);
+  predictor.classifyImageUrl(settings.iterationid, settings.publishiterationname, { url: imageUrl })
+    .then(result => {
+      var results = result.predictions;
+      let displayresult = "";
+      predictionlength = Object.keys(results!).length;
+      for (var i = 0; i < predictionlength; i++){
+        var prob = results![i].probability * 100;
+        var name = results![i].tagName;
+        console.log(results![i].probability!*100);
+        // prediction.push("This is " + JSON.stringify(results![i].tagName) + " with a probability of " + (results![i].probability!*100) + "; ");
+        // displayresult += name + " with a probability of " + prob + "% <br>";
+        displayresult += `<progress class="progress w-56" value=` + Math.round(prob) + ` max="100"></progress>` + name + "<br>"
+      };
+      (document.getElementById("display")! as HTMLInputElement).innerHTML = displayresult;
+      (document.getElementById("image")! as HTMLMediaElement).src = imageUrl;
+    });
 }
 </script>
 
 <template>
-  <button class="btn gap-2" @click="stopRecording" v-if="state.playing">
-    <font-awesome-icon icon="camera" />
-    Take Picture
-  </button>
-  <button class="btn gap-2" @click="startRecording" v-else>
-    <font-awesome-icon icon="camera" />
-    Open Camera
-  </button>
-  <div class="camera" v-if="state.playing">
-    <video id="video" autoplay :srcObject="state.stream" type="video/mp4">Video stream not yet available.</video>
-  </div>
-  <!-- <canvas id="canvas" v-else> -->
-  <canvas id="canvas">
-    <div class="output">
-      <img id="photo" alt="The screen capture will appear in this box.">
+
+  <div class="form-control">
+    <div class="input-group">
+      <input type="text" placeholder="Link to the image you want to analyze ..." class="input input-bordered" id="imagelink1" />
+      <button class="btn" @click="sendPicture">Classify</button>
     </div>
-  </canvas>
-  To dos: Use flower image classifier - be able to take photo or upload photo of
-  flower - receive confidence result
+  </div>
+  <p id="display"></p>
+  <img id="image" />
 </template>
